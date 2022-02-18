@@ -1,32 +1,38 @@
 App = {
-     web3Provider: null,
-     contracts: {},
+  web3Provider: null,
+  contracts: {},
 
-     init: function() {
-          /*
-           * Replace me...
-           */
+  init: function() {
+    var articlesRow = $('#articlesRow');
+    var articleTemplate = $('#articleTemplate');
 
-          return App.initWeb3();
-     },
+    articleTemplate.find('.panel-title').text('article 1');
+    articleTemplate.find('.article-description').text('Description for article 1');
+    articleTemplate.find('.article-price').text("10.23");
+    articleTemplate.find('.article-seller').text("0x123123123");
 
-     initWeb3: function() {
-          /*
-           * Replace me...
-           */
+    articlesRow.append(articleTemplate.html());
 
-          return App.initContract();
-     },
+    return App.initWeb3();
+  },
 
-     initContract: function() {
-          /*
-           * Replace me...
-           */
-     },
+  initWeb3: function() {
+      /*
+        * Replace me...
+        */
+
+      return App.initContract();
+  },
+
+  initContract: function() {
+      /*
+        * Replace me...
+        */
+  },
 };
 
 $(function() {
-     $(window).load(function() {
-          App.init();
-     });
+  $(window).load(function() {
+    App.init();
+  });
 });
