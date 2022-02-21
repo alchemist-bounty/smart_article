@@ -25,22 +25,23 @@ var contract = (function(module) {
     return this.provider.sendAsync.apply(this.provider, arguments);
   };
 
-  var BigNumber = (new Web3()).toBigNumber(0).constructor;
+  // var BigNumber = (new Web3()).toBigNumber(0).constructor;
 
   var Utils = {
     is_object: function(val) {
       return typeof val == "object" && !Array.isArray(val);
     },
     is_big_number: function(val) {
-      if (typeof val != "object") return false;
+      // if (typeof val != "object") return false;
 
-      // Instanceof won't work because we have multiple versions of Web3.
-      try {
-        new BigNumber(val);
-        return true;
-      } catch (e) {
-        return false;
-      }
+      // // Instanceof won't work because we have multiple versions of Web3.
+      // try {
+      //   new Web3.utils.(val);
+      //   return true;
+      // } catch (e) {
+      //   return false;
+      // }
+      return Web3.utils.isBigNumber(val);
     },
     decodeLogs: function(C, instance, logs) {
       return logs.map(function(log) {

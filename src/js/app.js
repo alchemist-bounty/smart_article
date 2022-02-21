@@ -46,7 +46,7 @@ App = {
       var articleTemplate = $('#articleTemplate');
       articleTemplate.find('.panel-title').text(article[1]);
       articleTemplate.find('.article-description').text(article[2]);
-      articleTemplate.find('.article-price').text(web3.fromWei(article[3], "ether"));
+      articleTemplate.find('.article-price').text(web3.utils.fromWei(article[3], "ether"));
 
       var seller = article[0];
       if (seller=-App.account) {
@@ -67,7 +67,7 @@ App = {
         $('#account').text(account);
         web3.eth.getBalance(account, function(err, balance) {
           if (err === null) {
-            $('#accountBalance').text(web3.fromWei(balance, "ether") + " ETH");
+            $('#accountBalance').text(web3.utils.fromWei(balance, "ether") + " ETH");
           }
         })
       }
