@@ -77,13 +77,13 @@ App = {
   sellArticle: function() {
     let _name = $("#article_name").val();
     let _desc = $("#article_description").val();
-    let _price = web3.toWei(parseFloat($("#article_price").val() || 0), "ether");
+    let _price = web3.utils.toWei($("#article_price").val() || '0', "ether");
     
     if ((_name.trim() == '') || (_price == 0)) {
       return false;
     }
 
-    App.contract.ChainList.deployed().then(function(instance) {
+    App.contracts.ChainList.deployed().then(function(instance) {
       instance.sellArticle(_name, _desc, _price, {
         from: App.account,
         gas: 500000
