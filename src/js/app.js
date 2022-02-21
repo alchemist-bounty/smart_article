@@ -14,16 +14,26 @@ App = {
       App.web3Provider = web3.currentProvider;
     }
     else {
-      app.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
     }
 
-    web3 = new Web3(app.web3Provider);
+    web3 = new Web3(App.web3Provider);
     App.displayAccountInfo();
     return App.initContract();
   },
 
   initContract: function() {
-    
+    $.getJSON('ChainList.json', function(chainListArtificat) {
+      App.contracts.ChainList = TruffleContract(chainListArtificat);
+      // set the provider for our contracts
+      App.contracts.ChainList.setProvider(App.web3Provider);
+      
+      return App.reloadArticles();
+    });
+  },
+
+  reloadArticles: function() {
+
   },
 
   displayAccountInfo: function() {
