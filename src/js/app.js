@@ -1,34 +1,44 @@
 App = {
   web3Provider: null,
   contracts: {},
+  account: 0x0,
 
   init: function() {
-    var articlesRow = $('#articlesRow');
-    var articleTemplate = $('#articleTemplate');
-
-    articleTemplate.find('.panel-title').text('article 1');
-    articleTemplate.find('.article-description').text('Description for article 1');
-    articleTemplate.find('.article-price').text("10.23");
-    articleTemplate.find('.article-seller').text("0x123123123");
-
-    articlesRow.append(articleTemplate.html());
-
     return App.initWeb3();
   },
 
   initWeb3: function() {
-      /*
-        * Replace me...
-        */
+    //initialize web3
+    if (typeof web3 !== 'undefined') {
+      // resue the provider of the web3 object injected by Metakask
+      App.web3Provider = web3.currentProvider;
+    }
+    else {
+      app.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+    }
 
-      return App.initContract();
+    web3 = new Web3(app.web3Provider);
+    App.displayAccountInfo();
+    return App.initContract();
   },
 
   initContract: function() {
-      /*
-        * Replace me...
-        */
+    
   },
+
+  displayAccountInfo: function() {
+    web3.eth.getCoinbase(function(err, account) {
+      if (err===null) {
+        App.account = account;
+        $('#account').text(account);
+        web3.eth.getBalance(account, function(err, balance) {
+          if (err === null) {
+            $('#accountBalance').text(web3.fromWei(balance, "ether") + " ETH");
+          }
+        })
+      }
+    });
+  }
 };
 
 $(function() {
