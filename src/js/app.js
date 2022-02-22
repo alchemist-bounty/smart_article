@@ -9,16 +9,16 @@ App = {
 
   initWeb3: function() {
     //initialize web3
-    if (typeof web3 !== 'undefined') {
-      // resue the provider of the web3 object injected by Metakask
-      App.web3Provider = web3.currentProvider;
-    }
-    else {
-      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
-    }
+    // if (typeof web3 !== 'undefined') {
+    //   // resue the provider of the web3 object injected by Metakask
+    //   App.web3Provider = web3.currentProvider;
+    // }
+    // else {
+    //   App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+    // }
 
-    web3 = new Web3(App.web3Provider);
-    // var web3 = new Web3(Web3.givenProvider || 'ws://localhost:7545')
+    // web3 = new Web3(App.web3Provider);
+    web3 = new Web3(Web3.givenProvider || 'ws://localhost:7545')
     App.displayAccountInfo();
     return App.initContract();
   },
@@ -71,8 +71,9 @@ App = {
     //     $('#accountBalance').text(web3.utils.fromWei(balance, "ether") + " ETH");
     //   }
     // })
-    web3.eth.getAccounts().then(function(acocunts) {
-      if (acocunts.length < 1) {
+    
+    web3.eth.requestAccounts().then(function(accounts) {
+      if (accounts.length < 1) {
         throw new Error("Insufficient accounts");
       }
       App.account = accounts[0];
