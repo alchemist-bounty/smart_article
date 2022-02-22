@@ -18,6 +18,7 @@ App = {
     }
 
     web3 = new Web3(App.web3Provider);
+    // var web3 = new Web3(Web3.givenProvider || 'ws://localhost:7545')
     App.displayAccountInfo();
     return App.initContract();
   },
@@ -61,16 +62,29 @@ App = {
   },
 
   displayAccountInfo: function() {
-    web3.eth.getCoinbase(function(err, account) {
-      if (err===null) {
-        App.account = account;
-        $('#account').text(account);
-        web3.eth.getBalance(account, function(err, balance) {
-          if (err === null) {
-            $('#accountBalance').text(web3.utils.fromWei(balance, "ether") + " ETH");
-          }
-        })
+    // web3.eth.getAccounts(function(err, acc) { 
+    //   accounts = acc;
+    //   console.log(accounts); 
+    // });
+    // web3.eth.getBalance("0xd15C2E81646D4B275B827934Bf3ac92b58A8F107", function(err, balance) {
+    //   if (err === null) {
+    //     $('#accountBalance').text(web3.utils.fromWei(balance, "ether") + " ETH");
+    //   }
+    // })
+    web3.eth.getAccounts().then(function(acocunts) {
+      if (acocunts.length < 1) {
+        throw new Error("Insufficient accounts");
       }
+      App.account = accounts[0];
+      $('#account').text(App.account);
+      web3.eth.getBalance(App.account, function(err, balance) {
+        if (err === null) {
+          $('#accountBalance').text(web3.utils.fromWei(balance, "ether") + " ETH");
+        }
+      })
+    })
+    .catch((err)=>{
+      console.error(err);
     });
   },
 
